@@ -74,13 +74,47 @@ function addTeam() {
     }); team.catch((err) => {
         throw err;
     })
+}
+
+function hireEngineer() {
+    inquirer
+  .prompt([
+    {
+      type: "input",
+      message: "What is your engineer's name?",
+      name: "engineerName"
+    },
+    {
+        type: "input",
+        message: "What is your engineer's id?",
+        name: "engineerid"
+    },
+    {
+        type: "input",
+        message: "What is your engineer's email?",
+        name: "engineeremail"
+    },
+    {
+        type: "input",
+        message: "What is your engineer's Github username?",
+        name: "github"
+    },
+  ])
+  .then(data2, function() {
+     const engineer = new Engineer (data2.engineerName, data2.engineerid, data2.engineeremail, data2.github);
+
+    employeesArray.push(engineer);
+    addTeam();
+    }); engineer.catch((err) => {
+    throw err;
+    });
+    }
 
 
 
 
 
-
-
+ 
 
 
 
@@ -112,7 +146,7 @@ function addTeam() {
 
 
 
-}
+
 
 
 
