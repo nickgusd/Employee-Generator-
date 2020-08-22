@@ -10,8 +10,12 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+//array to push responses from prompt with user answers
 const employeesArray = [];
 
+
+
+function managerPrompt() {
 inquirer
   .prompt([
     {
@@ -34,32 +38,32 @@ inquirer
         message: "What is your manager's office number?",
         name: "managersnumber"
     },
-    {
-        type: "list",
-        message: "Which type of team member would you like to add?",
-        name: "team",
-        choices: [
-            "Engineer",
-            "Intern",
-            "I don't want to add any more team members"
-        ]
-    },
-    {
-        type: "input",
-        message: `What is your ${response.choices} name?`,
-        name: `${response.choices}name`
-    },
-    {
-        type: "input",
-        message: `What is your ${response.choices} id?`,
-        name: `${response.choices}id`
-    },
-
-
-
-
-
   ])
+    .then(data), function() {
+        const manager = new Manager (data.managersName, data.managersid, data.managersemail, data.managersnumber);
+        employeesArray.push(manager);
+        addTeam();
+    }
+
+
+
+
+
+
+
+
+}
+
+// {
+//     type: "list",
+//     message: "Which type of team member would you like to add?",
+//     name: "team",
+//     choices: [
+//         "Engineer",
+//         "Intern",
+//         "I don't want to add any more team members"
+//     ]
+// },
 
 
 //   .then(function(response) {
