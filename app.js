@@ -39,20 +39,90 @@ inquirer
         name: "managersnumber"
     },
   ])
-    .then(data), function() {
+    .then(data, function() {
         const manager = new Manager (data.managersName, data.managersid, data.managersemail, data.managersnumber);
         employeesArray.push(manager);
         addTeam();
-    }
+    }); manager.catch((err) => {
+        throw err;
+    });
+}
+
+function addTeam() {
+    inquirer
+    .prompt([
+        {
+                type: "list",
+                message: "Which type of team member would you like to add?",
+                name: "team",
+                choices: [
+                    "Engineer",
+                    "Intern",
+                    "I don't want to add any more team members"
+                ],
+            },
+        ])
+    .then(({team}), function(){
+        if (team == "Engineer") {
+            hireEngineer();
+        } else if (team == "Intern") {
+            hireIntern();
+        } else {
+            updateTeam();
+        }
+
+    }); team.catch((err) => {
+        throw err;
+    })
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+    //   {
+    //     type: "input",
+    //     message: "What is your manager's name?",
+    //     name: "managersName"
+    //   },
+    //   {
+    //       type: "input",
+    //       message: "What is your manager's id?",
+    //       name: "managersid"
+    //   },
+    //   {
+    //       type: "input",
+    //       message: "What is your manager's email?",
+    //       name: "managersemail"
+    //   },
+    //   {
+    //       type: "input",
+    //       message: "What is your manager's office number?",
+    //       name: "managersnumber"
+    //   },
+    
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
 
 // {
 //     type: "list",
