@@ -41,7 +41,8 @@ inquirer.prompt([
     .then(function(data) {
         console.log(data)
         const manager = new Manager (data.managersName, data.managersid, data.managersemail, data.managersnumber);
-        // manager.getRole();
+        manager.getRole();
+        manager.getOfficeNumber();
         employeesArray.push(manager);
         addTeam();
     })
@@ -78,8 +79,6 @@ function addTeam() {
             buildTeam();
         }
 
-        
-
     })
     .catch(function(err) {
         throw err;
@@ -115,9 +114,8 @@ function hireEngineer() {
     console.log(data2)
 
     const engineer = new Engineer (data2.engineerName, data2.engineerid, data2.engineeremail, data2.github);
-    engineer.getGithub();
-    engineer.getRole();
-
+    // engineer.getGithub();
+    // engineer.getRole();
 
     employeesArray.push(engineer);
     addTeam();
@@ -127,44 +125,44 @@ function hireEngineer() {
     })
     }
 
-//     function hireIntern() {
-//         inquirer
-//         .prompt([
-//           {
-//             type: "input",
-//             message: "What is your intern's name?",
-//             name: "internName"
-//           },
-//           {
-//               type: "input",
-//               message: "What is your intern's id?",
-//               name: "internid"
-//           },
-//           {
-//               type: "input",
-//               message: "What is your intern's email?",
-//               name: "internemail"
-//           },
-//           {
-//               type: "input",
-//               message: "What is your intern's school?",
-//               name: "school"
-//           },
-//         ])
-//         .then(function(data3) {
-//             console.log(data3)
-//             const intern = new Intern (data3.internName, data3.internid, data3.internemail, data3.school);
-//             intern.getRole();
-//             intern.getSchool();
+    function hireIntern() {
+        inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "What is your intern's name?",
+            name: "internName"
+          },
+          {
+              type: "input",
+              message: "What is your intern's id?",
+              name: "internid"
+          },
+          {
+              type: "input",
+              message: "What is your intern's email?",
+              name: "internemail"
+          },
+          {
+              type: "input",
+              message: "What is your intern's school?",
+              name: "school"
+          },
+        ])
+        .then(function(data3) {
+            console.log(data3)
+            const intern = new Intern (data3.internName, data3.internid, data3.internemail, data3.school);
+            intern.getRole();
+            intern.getSchool();
 
-//            employeesArray.push(intern);
-//            addTeam();
-//            })
-//            .catch(function(err) {
-//             throw err;
-//         })
+           employeesArray.push(intern);
+           addTeam();
+           })
+           .catch(function(err) {
+            throw err;
+        })
            
-//     }
+    }
 
     function buildTeam() {
 
