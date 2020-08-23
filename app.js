@@ -16,8 +16,7 @@ managerPrompt();
 
 // function for manager information and to push to employees Array
 function managerPrompt() {
-inquirer
-  .prompt([
+inquirer.prompt([
     {
         type: "input",
         message: "What is your manager's name?",
@@ -39,19 +38,19 @@ inquirer
         name: "managersnumber",
     }
   ])
-    .then(data, function() {
+    .then(function(data) {
         console.log(data)
         const manager = new Manager (data.managersName, data.managersid, data.managersemail, data.managersnumber);
         // manager.getRole();
         employeesArray.push(manager);
         addTeam();
-    }); 
+    })
+    .catch(function(err) {
+        throw err;
+    }) 
     
-    if (err) {
-    return console.log(err);
 }
-}
-addTeam();
+// addTeam();
 //function to add team members
 function addTeam() {
     inquirer
@@ -67,18 +66,24 @@ function addTeam() {
                 ],
             },
         ])
-    .then((({team})), function(){
-        if (team == "Engineer") {
+    .then(function({team}){
+    //     console.log({team})
+    //    console.log(team[0])
+        // console.log(`${team.team}`)
+        if (team === "Engineer") {
             hireEngineer();
-        } else if (team == "Intern") {
+        } else if (team === "Intern") {
             hireIntern();
         } else {
             buildTeam();
         }
 
-        console.log({team})
+        
 
-    }); 
+    })
+    .catch(function(err) {
+        throw err;
+    })
 }
 
 //function to add Engineer to the team and push to employees array
@@ -106,7 +111,7 @@ function hireEngineer() {
         name: "github"
     },
   ])
-  .then(data2, function() {
+  .then(function(data2) {
     console.log(data2)
 
     const engineer = new Engineer (data2.engineerName, data2.engineerid, data2.engineeremail, data2.github);
@@ -116,57 +121,61 @@ function hireEngineer() {
 
     employeesArray.push(engineer);
     addTeam();
-    }); if (err) {
-        return console.log(err);
-    }
+    })
+    .catch(function(err) {
+        throw err;
+    })
     }
 
-    function hireIntern() {
-        inquirer
-        .prompt([
-          {
-            type: "input",
-            message: "What is your intern's name?",
-            name: "internName"
-          },
-          {
-              type: "input",
-              message: "What is your intern's id?",
-              name: "internid"
-          },
-          {
-              type: "input",
-              message: "What is your intern's email?",
-              name: "internemail"
-          },
-          {
-              type: "input",
-              message: "What is your intern's school?",
-              name: "school"
-          },
-        ])
-        .then(data3, function() {
-            console.log(data3)
-            const intern = new Intern (data3.internName, data3.internid, data3.internemail, data3.school);
-            intern.getRole();
-            intern.getSchool();
+//     function hireIntern() {
+//         inquirer
+//         .prompt([
+//           {
+//             type: "input",
+//             message: "What is your intern's name?",
+//             name: "internName"
+//           },
+//           {
+//               type: "input",
+//               message: "What is your intern's id?",
+//               name: "internid"
+//           },
+//           {
+//               type: "input",
+//               message: "What is your intern's email?",
+//               name: "internemail"
+//           },
+//           {
+//               type: "input",
+//               message: "What is your intern's school?",
+//               name: "school"
+//           },
+//         ])
+//         .then(function(data3) {
+//             console.log(data3)
+//             const intern = new Intern (data3.internName, data3.internid, data3.internemail, data3.school);
+//             intern.getRole();
+//             intern.getSchool();
 
-           employeesArray.push(intern);
-           addTeam();
-           }); if (err) {
-            return console.log(err);
-        }
+//            employeesArray.push(intern);
+//            addTeam();
+//            })
+//            .catch(function(err) {
+//             throw err;
+//         })
            
-    }
+//     }
 
     function buildTeam() {
 
-        fs.writeFile(outputPath, render(employeesArray), "utf-8");
+        fs.writeFile(outputPath, render(employeesArray), function(err) {
+            if(err){
+                return console.log(err); 
+            } 
+        } );
 
     }
  
-
-
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
