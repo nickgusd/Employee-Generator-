@@ -1,0 +1,28 @@
+
+body {
+    background: #12355b;
+}
+
+.jumbotron {
+    background: #69995D;
+}
+
+.text-center {
+    color: white;
+}
+
+.card-header {
+    background: #FF5D73;
+}
+.card-body {
+    background: #07A0C3;
+}
+
+.card-title {
+    color: white;
+}
+
+.card, .employee-Card {
+    margin: 0 10px;
+}
+

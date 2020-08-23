@@ -8,6 +8,8 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+
+
 const render = require("./lib/htmlRenderer");
 
 //array to push responses from prompt with user answers
@@ -114,8 +116,8 @@ function hireEngineer() {
     console.log(data2)
 
     const engineer = new Engineer (data2.engineerName, data2.engineerid, data2.engineeremail, data2.github);
-    // engineer.getGithub();
-    // engineer.getRole();
+    engineer.getGithub();
+    engineer.getRole();
 
     employeesArray.push(engineer);
     addTeam();
