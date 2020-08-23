@@ -12,17 +12,17 @@ const render = require("./lib/htmlRenderer");
 
 //array to push responses from prompt with user answers
 const employeesArray = [];
+managerPrompt();
 
-
-
+//function for manager information and to push to employees Array
 function managerPrompt() {
 inquirer
   .prompt([
     {
-      type: "input",
-      message: "What is your manager's name?",
-      name: "managersName"
-    },
+        type: "input",
+        message: "What is your manager's name?",
+        name: "managersName"
+    },  
     {
         type: "input",
         message: "What is your manager's id?",
@@ -37,17 +37,22 @@ inquirer
         type: "input",
         message: "What is your manager's office number?",
         name: "managersnumber"
-    },
+    }
   ])
     .then(data, function() {
+        console.log(data)
         const manager = new Manager (data.managersName, data.managersid, data.managersemail, data.managersnumber);
+        manager.getRole();
         employeesArray.push(manager);
         addTeam();
-    }); manager.catch((err) => {
-        throw err;
-    });
+    }); 
+    
+    if (err) {
+    return console.log(err);
+}
 }
 
+//function to add team members
 function addTeam() {
     inquirer
     .prompt([
@@ -68,14 +73,17 @@ function addTeam() {
         } else if (team == "Intern") {
             hireIntern();
         } else {
-            updateTeam();
+            buildTeam();
         }
+
+        console.log({team})
 
     }); team.catch((err) => {
         throw err;
     })
 }
 
+//function to add Engineer to the team and push to employees array
 function hireEngineer() {
     inquirer
   .prompt([
@@ -101,7 +109,12 @@ function hireEngineer() {
     },
   ])
   .then(data2, function() {
-     const engineer = new Engineer (data2.engineerName, data2.engineerid, data2.engineeremail, data2.github);
+    console.log(data2)
+
+    const engineer = new Engineer (data2.engineerName, data2.engineerid, data2.engineeremail, data2.github);
+    engineer.getGithub();
+    engineer.getRole();
+
 
     employeesArray.push(engineer);
     addTeam();
@@ -110,91 +123,50 @@ function hireEngineer() {
     });
     }
 
+    function hireIntern() {
+        inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "What is your intern's name?",
+            name: "internName"
+          },
+          {
+              type: "input",
+              message: "What is your intern's id?",
+              name: "internid"
+          },
+          {
+              type: "input",
+              message: "What is your intern's email?",
+              name: "internemail"
+          },
+          {
+              type: "input",
+              message: "What is your intern's school?",
+              name: "school"
+          },
+        ])
+        .then(data3, function() {
+            console.log(data3)
+            const intern = new Intern (data3.internName, data3.internid, data3.internemail, data3.school);
+            intern.getRole();
+            intern.getSchool();
 
+           employeesArray.push(intern);
+           addTeam();
+           }); engineer.catch((err) => {
+           throw err;
+           });
+           
+    }
 
+    function buildTeam() {
 
+        fs.writeFile(outputPath, render(employeesArray), "utf-8");
 
+    }
  
-
-
-
-
-
-
-
-    //   {
-    //     type: "input",
-    //     message: "What is your manager's name?",
-    //     name: "managersName"
-    //   },
-    //   {
-    //       type: "input",
-    //       message: "What is your manager's id?",
-    //       name: "managersid"
-    //   },
-    //   {
-    //       type: "input",
-    //       message: "What is your manager's email?",
-    //       name: "managersemail"
-    //   },
-    //   {
-    //       type: "input",
-    //       message: "What is your manager's office number?",
-    //       name: "managersnumber"
-    //   },
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// {
-//     type: "list",
-//     message: "Which type of team member would you like to add?",
-//     name: "team",
-//     choices: [
-//         "Engineer",
-//         "Intern",
-//         "I don't want to add any more team members"
-//     ]
-// },
-
-
-//   .then(function(response) {
-
-//     if (response.confirm === response.password) {
-//       console.log("Success!");
-//     }
-//     else {
-//       console.log("You forgot your password already?!");
-//     }
-//   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
