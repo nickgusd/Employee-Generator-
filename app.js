@@ -14,35 +14,35 @@ const render = require("./lib/htmlRenderer");
 const employeesArray = [];
 managerPrompt();
 
-//function for manager information and to push to employees Array
+// function for manager information and to push to employees Array
 function managerPrompt() {
 inquirer
   .prompt([
     {
         type: "input",
         message: "What is your manager's name?",
-        name: "managersName"
+        name: "managersName", 
     },  
     {
         type: "input",
         message: "What is your manager's id?",
-        name: "managersid"
+        name: "managersid",
     },
     {
         type: "input",
         message: "What is your manager's email?",
-        name: "managersemail"
+        name: "managersemail",
     },
     {
         type: "input",
         message: "What is your manager's office number?",
-        name: "managersnumber"
+        name: "managersnumber",
     }
   ])
     .then(data, function() {
         console.log(data)
         const manager = new Manager (data.managersName, data.managersid, data.managersemail, data.managersnumber);
-        manager.getRole();
+        // manager.getRole();
         employeesArray.push(manager);
         addTeam();
     }); 
@@ -51,7 +51,7 @@ inquirer
     return console.log(err);
 }
 }
-
+addTeam();
 //function to add team members
 function addTeam() {
     inquirer
@@ -67,7 +67,7 @@ function addTeam() {
                 ],
             },
         ])
-    .then(({team}), function(){
+    .then((({team})), function(){
         if (team == "Engineer") {
             hireEngineer();
         } else if (team == "Intern") {
@@ -78,9 +78,7 @@ function addTeam() {
 
         console.log({team})
 
-    }); team.catch((err) => {
-        throw err;
-    })
+    }); 
 }
 
 //function to add Engineer to the team and push to employees array
@@ -118,9 +116,9 @@ function hireEngineer() {
 
     employeesArray.push(engineer);
     addTeam();
-    }); engineer.catch((err) => {
-    throw err;
-    });
+    }); if (err) {
+        return console.log(err);
+    }
     }
 
     function hireIntern() {
@@ -155,9 +153,9 @@ function hireEngineer() {
 
            employeesArray.push(intern);
            addTeam();
-           }); engineer.catch((err) => {
-           throw err;
-           });
+           }); if (err) {
+            return console.log(err);
+        }
            
     }
 
